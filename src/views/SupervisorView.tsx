@@ -836,26 +836,58 @@ export function SupervisorView({
                         </div>
                       )}
 
-                      <button
-                        onClick={() => {
-                          if (eliminarInspeccion) {
-                            eliminarInspeccion(insp.id)
-                          }
-                        }}
-                        style={{
-                          width: '100%',
-                          backgroundColor: '#ffebee',
-                          color: '#c62828',
-                          border: '1px solid #ef5350',
-                          borderRadius: '6px',
-                          padding: '8px',
-                          cursor: 'pointer',
-                          fontSize: '12px',
-                          fontWeight: 'bold'
-                        }}
-                      >
-                        🗑️ Eliminar
-                      </button>
+                      <div style={{ display: 'flex', gap: '8px' }}>
+                        <button
+                          onClick={() => {
+                            const cliente = clientes.find(c => c.id === insp.clienteId)
+                            if (cliente?.limpiador?.whatsapp) {
+                              const mensaje = `📋 *Inspección Realizada*\n\n*Cliente:* ${cliente.nombre}\n*Fecha:* ${insp.fecha}\n*Hora:* ${insp.hora}\n\n⚠️ *Items que necesitan revisión:*\n${insp.items.filter(i => i.estado === 'revisar').map(item => {
+                                const itemObj = items.find(x => x.id === item.itemId)
+                                return `• ${itemObj?.nombre}${item.anotaciones ? ` - ${item.anotaciones}` : ''}`
+                              }).join('\n')}`
+
+                              const url = `https://wa.me/${cliente.limpiador.whatsapp}?text=${encodeURIComponent(mensaje)}`
+                              window.open(url, '_blank')
+                            } else {
+                              alert('El cliente no tiene número de WhatsApp registrado')
+                            }
+                          }}
+                          style={{
+                            flex: 1,
+                            backgroundColor: '#25D366',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '6px',
+                            padding: '8px',
+                            cursor: 'pointer',
+                            fontSize: '12px',
+                            fontWeight: 'bold'
+                          }}
+                        >
+                          📱 WhatsApp
+                        </button>
+
+                        <button
+                          onClick={() => {
+                            if (eliminarInspeccion) {
+                              eliminarInspeccion(insp.id)
+                            }
+                          }}
+                          style={{
+                            flex: 1,
+                            backgroundColor: '#ffebee',
+                            color: '#c62828',
+                            border: '1px solid #ef5350',
+                            borderRadius: '6px',
+                            padding: '8px',
+                            cursor: 'pointer',
+                            fontSize: '12px',
+                            fontWeight: 'bold'
+                          }}
+                        >
+                          🗑️ Eliminar
+                        </button>
+                      </div>
                     </div>
                   )
                 })}
