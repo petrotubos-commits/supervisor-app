@@ -37,15 +37,21 @@ function App() {
   }, [])
 
   useEffect(() => {
-    const datosAGuardar = {
-      clientes,
-      supervisores,
-      zonas,
-      items,
-      inspecciones
+    try {
+      const datosAGuardar = {
+        clientes,
+        supervisores,
+        zonas,
+        items,
+        inspecciones
+      }
+      console.log('💾 GUARDANDO - Clientes:', datosAGuardar.clientes.length, 'Inspecciones:', datosAGuardar.inspecciones.length)
+      const serializado = JSON.stringify(datosAGuardar)
+      localStorage.setItem('supervisorAppData', serializado)
+      console.log('✅ Datos guardados en localStorage - Tamaño:', (serializado.length / 1024).toFixed(2), 'KB')
+    } catch (error) {
+      console.error('❌ Error guardando en localStorage:', error)
     }
-    console.log('💾 GUARDANDO - Clientes:', datosAGuardar.clientes.length, 'Inspecciones:', datosAGuardar.inspecciones.length)
-    localStorage.setItem('supervisorAppData', JSON.stringify(datosAGuardar))
   }, [clientes, supervisores, zonas, items, inspecciones])
 
   const agregarCliente = (nombre: string) => {
