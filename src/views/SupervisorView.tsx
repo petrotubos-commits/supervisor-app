@@ -803,20 +803,31 @@ export function SupervisorView({
                       </div>
 
                       {itemsConObservacion.length > 0 && (
-                        <div style={{ backgroundColor: '#fff8f0', borderRadius: '6px', padding: '8px', marginBottom: '12px' }}>
-                          <p style={{ margin: '0 0 6px 0', fontSize: '11px', fontWeight: 'bold', color: '#d97706' }}>
+                        <div style={{ backgroundColor: '#fff8f0', borderRadius: '6px', padding: '12px', marginBottom: '12px' }}>
+                          <p style={{ margin: '0 0 8px 0', fontSize: '11px', fontWeight: 'bold', color: '#d97706' }}>
                             ⚠️ Items que necesitan revisión:
                           </p>
-                          <ul style={{ margin: 0, paddingLeft: '16px' }}>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                             {itemsConObservacion.map((item) => {
                               const itemObj = items.find(i => i.id === item.itemId)
+                              const zona = zonas.find(z => z.id === itemObj?.zonaId)
                               return (
-                                <li key={item.itemId} style={{ fontSize: '11px', color: '#333', marginBottom: '2px' }}>
-                                  {itemObj?.nombre}
-                                </li>
+                                <div key={item.itemId} style={{ borderLeft: '2px solid #d97706', paddingLeft: '8px' }}>
+                                  <p style={{ margin: 0, fontSize: '11px', color: '#333', fontWeight: '500' }}>
+                                    🗺️ {zona?.nombre}
+                                  </p>
+                                  <p style={{ margin: '2px 0 0 0', fontSize: '10px', color: '#666' }}>
+                                    {itemObj?.nombre}
+                                  </p>
+                                  {item.anotaciones && (
+                                    <p style={{ margin: '3px 0 0 0', fontSize: '10px', color: '#d97706', fontStyle: 'italic' }}>
+                                      📝 {item.anotaciones}
+                                    </p>
+                                  )}
+                                </div>
                               )
                             })}
-                          </ul>
+                          </div>
                         </div>
                       )}
 
