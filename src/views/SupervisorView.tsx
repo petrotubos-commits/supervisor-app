@@ -545,7 +545,7 @@ export function SupervisorView({
                   onClick={() => handleResponderItem('revisar')}
                   style={{
                     width: '100%',
-                    backgroundColor: '#d97706',
+                    backgroundColor: '#dc2626',
                     color: 'white',
                     border: 'none',
                     borderRadius: '8px',
@@ -564,7 +564,7 @@ export function SupervisorView({
               <h4 style={{ fontSize: '12px', fontWeight: 'bold', marginTop: 0, marginBottom: '8px', color: '#333' }}>
                 Progreso:
               </h4>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 {itemsDeLaZona.map((item) => {
                   const respondido = respuestas.has(item.id)
                   const estado = respuestas.get(item.id)?.estado
@@ -572,18 +572,27 @@ export function SupervisorView({
                     <div
                       key={item.id}
                       style={{
-                        padding: '8px 12px',
-                        backgroundColor: respondido ? '#f9fafb' : 'white',
-                        borderLeft: `4px solid ${respondido ? (estado === 'cumple' ? '#5C9E2E' : '#d97706') : '#ccc'}`,
-                        borderRadius: '4px',
-                        fontSize: '12px'
+                        padding: '12px 14px',
+                        backgroundColor: respondido ? (estado === 'cumple' ? '#f0fdf4' : '#fef2f2') : '#f9fafb',
+                        borderLeft: `5px solid ${respondido ? (estado === 'cumple' ? '#22c55e' : '#dc2626') : '#e5e7eb'}`,
+                        borderRadius: '6px',
+                        fontSize: '13px',
+                        fontWeight: respondido ? '500' : '400'
                       }}
                     >
-                      <p style={{ margin: 0, color: respondido ? '#333' : '#999' }}>
+                      <p style={{ margin: 0, color: respondido ? '#1f2937' : '#9ca3af', display: 'flex', alignItems: 'center', gap: '8px' }}>
                         {item.nombre}
                         {respondido && (
-                          <span style={{ marginLeft: '8px', color: estado === 'cumple' ? '#5C9E2E' : '#d97706' }}>
-                            {estado === 'cumple' ? '✓' : '⚠️'}
+                          <span style={{
+                            marginLeft: 'auto',
+                            padding: '2px 8px',
+                            borderRadius: '12px',
+                            backgroundColor: estado === 'cumple' ? '#22c55e' : '#dc2626',
+                            color: 'white',
+                            fontWeight: 'bold',
+                            fontSize: '12px'
+                          }}>
+                            {estado === 'cumple' ? '✓ OK' : '⚠ REVISAR'}
                           </span>
                         )}
                       </p>
@@ -813,19 +822,19 @@ export function SupervisorView({
 
                       {itemsConObservacion.length > 0 && (
                         <div style={{ backgroundColor: '#fff8f0', borderRadius: '6px', padding: '12px', marginBottom: '12px' }}>
-                          <p style={{ margin: '0 0 8px 0', fontSize: '11px', fontWeight: 'bold', color: '#d97706' }}>
+                          <p style={{ margin: '0 0 8px 0', fontSize: '11px', fontWeight: 'bold', color: '#dc2626' }}>
                             ⚠️ Items que necesitan revisión:
                           </p>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                             {itemsConObservacion.map((item) => {
                               const itemObj = items.find(i => i.id === item.itemId)
                               return (
-                                <div key={item.itemId} style={{ borderLeft: '2px solid #d97706', paddingLeft: '8px' }}>
+                                <div key={item.itemId} style={{ borderLeft: '2px solid #dc2626', paddingLeft: '8px' }}>
                                   <p style={{ margin: '0 0 2px 0', fontSize: '10px', color: '#666' }}>
                                     {itemObj?.nombre}
                                   </p>
                                   {item.anotaciones && (
-                                    <p style={{ margin: '3px 0 0 0', fontSize: '10px', color: '#d97706', fontStyle: 'italic' }}>
+                                    <p style={{ margin: '3px 0 0 0', fontSize: '10px', color: '#dc2626', fontStyle: 'italic' }}>
                                       📝 {item.anotaciones}
                                     </p>
                                   )}
@@ -934,7 +943,7 @@ export function SupervisorView({
               width: '90%',
               boxShadow: '0 10px 40px rgba(0, 0, 0, 0.3)'
             }}>
-              <h2 style={{ fontSize: '16px', fontWeight: 'bold', marginTop: 0, marginBottom: '12px', color: '#d97706' }}>
+              <h2 style={{ fontSize: '16px', fontWeight: 'bold', marginTop: 0, marginBottom: '12px', color: '#dc2626' }}>
                 ⚠️ Esta zona ya fue inspeccionada
               </h2>
               <p style={{ fontSize: '14px', color: '#666', marginBottom: '24px' }}>
