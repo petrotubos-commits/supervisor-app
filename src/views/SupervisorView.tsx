@@ -854,10 +854,22 @@ export function SupervisorView({
                           onClick={() => {
                             const cliente = clientes.find(c => c.id === insp.clienteId)
                             if (cliente?.limpiador?.whatsapp) {
-                              const mensaje = `📋 *Inspección Realizada*\n\n*Cliente:* ${cliente.nombre}\n*Fecha:* ${insp.fecha}\n*Hora:* ${insp.hora}\n\n⚠️ *Items que necesitan revisión:*\n${insp.items.filter(i => i.estado === 'revisar').map(item => {
+                              // Agrupar items por zona
+                              const itemsPorZona: { [key: string]: any[] } = {}
+                              insp.items.filter(i => i.estado === 'revisar').forEach(item => {
                                 const itemObj = items.find(x => x.id === item.itemId)
-                                return `• ${itemObj?.nombre}${item.anotaciones ? ` - ${item.anotaciones}` : ''}`
-                              }).join('\n')}`
+                                const zona = zonas.find(z => z.id === itemObj?.zonaId)
+                                const zonaName = zona?.nombre || 'Sin zona'
+                                if (!itemsPorZona[zonaName]) itemsPorZona[zonaName] = []
+                                itemsPorZona[zonaName].push({ ...item, itemObj })
+                              })
+
+                              const mensaje = `📋 *INSPECCIÓN REALIZADA*\n\n👤 *Cliente:* ${cliente.nombre}\n📅 *Fecha:* ${insp.fecha}\n⏰ *Hora:* ${insp.hora}\n\n🔴 *ITEMS QUE NECESITAN REVISIÓN:*\n${Object.entries(itemsPorZona).map(([zona, items]) => {
+                                return `\n🗺️ *ZONA: ${zona}*\n${items.map(item => {
+                                  const obs = item.anotaciones ? `\n📝 Observación: _${item.anotaciones}_` : ''
+                                  return `  🟡 *${item.itemObj?.nombre}*${obs}`
+                                }).join('\n')}`
+                              }).join('\n')}\n\n⏸️ *Por favor, revisar y reportar cuando esté listo*`
 
                               const url = `https://wa.me/${cliente.limpiador.whatsapp}?text=${encodeURIComponent(mensaje)}`
                               window.open(url, '_blank')
