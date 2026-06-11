@@ -237,36 +237,38 @@ export function SupervisorView({
                 }
               }}
             />
-            <div style={{ display: 'flex', gap: '8px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <button
                 onClick={() => handleCrearSupervisor(nuevoSupervisorNombre)}
                 style={{
-                  flex: 1,
+                  width: '100%',
                   backgroundColor: '#5C9E2E',
                   color: 'white',
                   border: 'none',
                   borderRadius: '8px',
                   padding: '12px',
                   fontWeight: 'bold',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  fontSize: '14px'
                 }}
               >
-                Crear
+                ✓ Crear Supervisor
               </button>
               <button
                 onClick={() => { setPaso('menu'); setNuevoSupervisorNombre(''); }}
                 style={{
-                  flex: 1,
+                  width: '100%',
                   backgroundColor: 'white',
                   color: '#666',
                   border: '2px solid #ddd',
                   borderRadius: '8px',
                   padding: '12px',
                   fontWeight: 'bold',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  fontSize: '14px'
                 }}
               >
-                Cancelar
+                ← Volver al Menú
               </button>
             </div>
           </div>
