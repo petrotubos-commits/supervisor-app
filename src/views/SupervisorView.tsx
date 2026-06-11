@@ -656,33 +656,6 @@ export function SupervisorView({
 
                 <button
                   onClick={() => {
-                    if (!guardarInspeccion || !supervisorSeleccionado || !clienteSeleccionado || !zonaSeleccionada) return
-
-                    const itemsInspeccionados = Array.from(respuestas.entries()).map(([itemId, datos]) => ({
-                      itemId,
-                      estado: datos.estado,
-                      anotaciones: datos.anotaciones
-                    }))
-
-                    itemsInspeccionados.forEach((item) => {
-                      if (actualizarEstadoItem) {
-                        const estado = item.estado === 'cumple' ? 'bien' : ('revision' as const)
-                        actualizarEstadoItem(item.itemId, estado, item.anotaciones)
-                      }
-                    })
-
-                    const ahora = new Date()
-                    const inspeccion = {
-                      id: Date.now().toString(),
-                      supervisorId: supervisorSeleccionado.id,
-                      clienteId: clienteSeleccionado.id,
-                      fecha: ahora.toISOString().split('T')[0],
-                      hora: ahora.toTimeString().slice(0, 5),
-                      items: itemsInspeccionados
-                    }
-
-                    guardarInspeccion(inspeccion)
-
                     setZonaSeleccionada(null)
                     setItemActual(0)
                     setRespuestas(new Map())
