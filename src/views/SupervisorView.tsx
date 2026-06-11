@@ -864,12 +864,12 @@ export function SupervisorView({
                                 itemsPorZona[zonaName].push({ ...item, itemObj })
                               })
 
-                              const mensaje = `📋 *INSPECCIÓN REALIZADA*\n\n👤 *Cliente:* ${cliente.nombre}\n📅 *Fecha:* ${insp.fecha}\n⏰ *Hora:* ${insp.hora}\n\n🔴 *ITEMS QUE NECESITAN REVISIÓN:*\n${Object.entries(itemsPorZona).map(([zona, items]) => {
-                                return `\n🗺️ *ZONA: ${zona}*\n${items.map(item => {
-                                  const obs = item.anotaciones ? `\n📝 Observación: _${item.anotaciones}_` : ''
-                                  return `  🟡 *${item.itemObj?.nombre}*${obs}`
+                              const mensaje = `*INSPECCIÓN REALIZADA*\n\n*Cliente:* ${cliente.nombre}\n*Fecha:* ${insp.fecha}\n*Hora:* ${insp.hora}\n\n*ITEMS QUE NECESITAN REVISIÓN:*\n${Object.entries(itemsPorZona).map(([zona, items]) => {
+                                return `\n*ZONA: ${zona}*\n${items.map(item => {
+                                  const obs = item.anotaciones ? `\nObservación: _${item.anotaciones}_` : ''
+                                  return `• *${item.itemObj?.nombre}*${obs}`
                                 }).join('\n')}`
-                              }).join('\n')}\n\n⏸️ *Por favor, revisar y reportar cuando esté listo*`
+                              }).join('\n')}\n\n*Por favor, revisar y reportar cuando esté listo*`
 
                               const url = `https://wa.me/${cliente.limpiador.whatsapp}?text=${encodeURIComponent(mensaje)}`
                               window.open(url, '_blank')
