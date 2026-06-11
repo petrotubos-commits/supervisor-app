@@ -60,11 +60,12 @@ function App() {
     }
   }, [cargado, clientes, supervisores, zonas, items, inspecciones])
 
-  const agregarCliente = (nombre: string) => {
+  const agregarCliente = (nombre: string, limpiador?: { nombre: string; whatsapp: string }) => {
     const nuevoCliente: Cliente = {
       id: Date.now().toString(),
       nombre,
-      fechaCreacion: new Date().toISOString()
+      fechaCreacion: new Date().toISOString(),
+      limpiador
     }
     setClientes([...clientes, nuevoCliente])
   }

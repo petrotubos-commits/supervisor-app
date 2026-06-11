@@ -2,6 +2,10 @@ export interface Cliente {
   id: string
   nombre: string
   fechaCreacion: string
+  limpiador?: {
+    nombre: string
+    whatsapp: string
+  }
 }
 
 export interface Supervisor {

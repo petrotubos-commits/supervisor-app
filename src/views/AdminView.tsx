@@ -7,7 +7,7 @@ interface AdminViewProps {
   supervisores: any[]
   zonas: any[]
   items: any[]
-  agregarCliente: (nombre: string) => void
+  agregarCliente: (nombre: string, limpiador?: { nombre: string; whatsapp: string }) => void
   eliminarCliente: (id: string) => void
   actualizarCliente: (id: string, nombre: string) => void
   agregarSupervisor: (nombre: string) => void
@@ -36,6 +36,8 @@ export function AdminView({
 }: AdminViewProps) {
   const [paso, setPaso] = useState<'menu' | 'crear-cliente' | 'opciones-cliente' | 'editar-cliente' | 'crear-zona' | 'crear-item' | 'opciones-item' | 'editar-item' | 'observacion-item'>('menu')
   const [nuevoClienteNombre, setNuevoClienteNombre] = useState('')
+  const [nuevoLimpiadorNombre, setNuevoLimpiadorNombre] = useState('')
+  const [nuevoLimpiadorWhatsapp, setNuevoLimpiadorWhatsapp] = useState('')
   const [clienteRecienCreado, setClienteRecienCreado] = useState<string | null>(null)
   const [clienteSeleccionado, setClienteSeleccionado] = useState<{ id: string; nombre: string } | null>(null)
   const [edicionNombre, setEdicionNombre] = useState('')
@@ -54,16 +56,17 @@ export function AdminView({
   const itemInputRef = useRef<HTMLInputElement>(null)
   const observacionRef = useRef<HTMLTextAreaElement>(null)
 
-  const handleCrearCliente = (nombre: string) => {
-    if (nombre.trim()) {
-      agregarCliente(nombre)
-      setClienteRecienCreado(nombre)
+  const handleCrearCliente = () => {
+    if (nuevoClienteNombre.trim() && nuevoLimpiadorNombre.trim() && nuevoLimpiadorWhatsapp.trim()) {
+      agregarCliente(nuevoClienteNombre, {
+        nombre: nuevoLimpiadorNombre,
+        whatsapp: nuevoLimpiadorWhatsapp
+      })
+      setClienteRecienCreado(nuevoClienteNombre)
       setNuevoClienteNombre('')
-      setTimeout(() => {
-        if (inputRef.current) {
-          inputRef.current.focus()
-        }
-      }, 0)
+      setNuevoLimpiadorNombre('')
+      setNuevoLimpiadorWhatsapp('')
+      setPaso('menu')
     }
   }
 
@@ -218,34 +221,90 @@ export function AdminView({
                 <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: '#1565c0', marginTop: 0, marginBottom: '24px' }}>
                   Crear Nuevo Cliente
                 </h2>
-                <p style={{ fontSize: '14px', color: '#666', marginBottom: '12px' }}>
-                  Ingresa el nombre del cliente
-                </p>
-                <input
-                  ref={inputRef}
-                  type="text"
-                  placeholder="Ej: Mercado el Águila"
-                  value={nuevoClienteNombre}
-                  onChange={(e) => setNuevoClienteNombre(e.target.value)}
-                  onKeyPress={(e) => {
-                    if (e.key === 'Enter') {
-                      handleCrearCliente(nuevoClienteNombre)
-                    }
-                  }}
+
+                <div style={{ marginBottom: '16px' }}>
+                  <p style={{ fontSize: '14px', color: '#666', marginBottom: '8px' }}>
+                    Nombre del cliente
+                  </p>
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    placeholder="Ej: Mercado el Águila"
+                    value={nuevoClienteNombre}
+                    onChange={(e) => setNuevoClienteNombre(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '12px',
+                      fontSize: '16px',
+                      border: '2px solid #ddd',
+                      borderRadius: '8px',
+                      boxSizing: 'border-box'
+                    }}
+                    autoFocus
+                  />
+                </div>
+
+                <div style={{ marginBottom: '16px' }}>
+                  <p style={{ fontSize: '14px', color: '#666', marginBottom: '8px' }}>
+                    Nombre del limpiador
+                  </p>
+                  <input
+                    type="text"
+                    placeholder="Ej: Juan Pérez"
+                    value={nuevoLimpiadorNombre}
+                    onChange={(e) => setNuevoLimpiadorNombre(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '12px',
+                      fontSize: '16px',
+                      border: '2px solid #ddd',
+                      borderRadius: '8px',
+                      boxSizing: 'border-box'
+                    }}
+                  />
+                </div>
+
+                <div style={{ marginBottom: '16px' }}>
+                  <p style={{ fontSize: '14px', color: '#666', marginBottom: '8px' }}>
+                    WhatsApp del limpiador (sin espacios, ej: +573001234567)
+                  </p>
+                  <input
+                    type="text"
+                    placeholder="Ej: +573001234567"
+                    value={nuevoLimpiadorWhatsapp}
+                    onChange={(e) => setNuevoLimpiadorWhatsapp(e.target.value)}
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter') {
+                        handleCrearCliente()
+                      }
+                    }}
+                    style={{
+                      width: '100%',
+                      padding: '12px',
+                      fontSize: '16px',
+                      border: '2px solid #ddd',
+                      borderRadius: '8px',
+                      boxSizing: 'border-box'
+                    }}
+                  />
+                </div>
+
+                <button
+                  onClick={handleCrearCliente}
                   style={{
                     width: '100%',
                     padding: '12px',
-                    fontSize: '16px',
-                    border: '2px solid #ddd',
+                    backgroundColor: '#5C9E2E',
+                    color: 'white',
+                    border: 'none',
                     borderRadius: '8px',
-                    boxSizing: 'border-box',
-                    marginBottom: '8px'
+                    fontWeight: 'bold',
+                    fontSize: '14px',
+                    cursor: 'pointer'
                   }}
-                  autoFocus
-                />
-                <p style={{ fontSize: '12px', color: '#999', marginTop: '8px' }}>
-                  Presiona ENTER para guardar
-                </p>
+                >
+                  ✓ Crear Cliente
+                </button>
               </div>
 
               {clienteRecienCreado && (
