@@ -17,8 +17,8 @@ function App() {
   const [inspecciones, setInspecciones] = useState<Inspeccion[]>([])
 
   useEffect(() => {
-    // Intenta cargar de sessionStorage primero (más limpio)
-    const datosGuardados = sessionStorage.getItem('supervisorAppData')
+    // Carga datos guardados permanentemente en localStorage
+    const datosGuardados = localStorage.getItem('supervisorAppData')
     if (datosGuardados) {
       try {
         const datos = JSON.parse(datosGuardados)
@@ -27,12 +27,12 @@ function App() {
         setZonas(datos.zonas || [])
         setItems(datos.items || [])
         setInspecciones(datos.inspecciones || [])
-        console.log('✅ Datos cargados de sessionStorage:', datos.inspecciones)
+        console.log('✅ Datos cargados de localStorage:', datos.clientes.length, 'clientes')
       } catch (e) {
         console.error('Error cargando datos:', e)
       }
     } else {
-      console.log('📭 No hay datos guardados')
+      console.log('📭 Sin datos guardados - comenzando nuevo')
     }
   }, [])
 
@@ -44,8 +44,8 @@ function App() {
       items,
       inspecciones
     }
-    console.log('💾 GUARDANDO EN SESSIONSTORAGE - Inspecciones:', datosAGuardar.inspecciones.length)
-    sessionStorage.setItem('supervisorAppData', JSON.stringify(datosAGuardar))
+    console.log('💾 GUARDANDO - Clientes:', datosAGuardar.clientes.length, 'Inspecciones:', datosAGuardar.inspecciones.length)
+    localStorage.setItem('supervisorAppData', JSON.stringify(datosAGuardar))
   }, [clientes, supervisores, zonas, items, inspecciones])
 
   const agregarCliente = (nombre: string) => {
