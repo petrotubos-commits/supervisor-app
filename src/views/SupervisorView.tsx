@@ -864,12 +864,12 @@ export function SupervisorView({
                                 itemsPorZona[zonaName].push({ ...item, itemObj })
                               })
 
-                              const mensaje = `*INSPECCIÓN REALIZADA*\n\n*Cliente:* ${cliente.nombre}\n*Fecha:* ${insp.fecha}\n*Hora:* ${insp.hora}\n\n*ITEMS QUE NECESITAN REVISIÓN:*\n${Object.entries(itemsPorZona).map(([zona, items]) => {
-                                return `\n*ZONA: ${zona}*\n${items.map(item => {
-                                  const obs = item.anotaciones ? `\nObservación: _${item.anotaciones}_` : ''
-                                  return `• *${item.itemObj?.nombre}*${obs}`
-                                }).join('\n')}`
-                              }).join('\n')}\n\n*Por favor, revisar y reportar cuando esté listo*`
+                              const mensaje = `INSPECCIÓN REALIZADA\n\nCliente: ${cliente.nombre}\nFecha: ${insp.fecha}\nHora: ${insp.hora}\n\nITEMS QUE NECESITAN REVISIÓN:\n${Object.entries(itemsPorZona).map(([zona, items]) => {
+                                return `\nZONA: ${zona}\n${items.map(item => {
+                                  const obs = item.anotaciones ? `\nObservación: ${item.anotaciones}` : ''
+                                  return `${item.itemObj?.nombre}${obs}`
+                                }).join('\n\n')}`
+                              }).join('\n')}\n\nPor favor, revisar y reportar cuando esté listo`
 
                               // Copiar al portapapeles
                               navigator.clipboard.writeText(mensaje).then(() => {
