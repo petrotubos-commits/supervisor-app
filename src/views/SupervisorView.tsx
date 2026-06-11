@@ -564,24 +564,28 @@ export function SupervisorView({
               <h4 style={{ fontSize: '12px', fontWeight: 'bold', marginTop: 0, marginBottom: '8px', color: '#333' }}>
                 Progreso:
               </h4>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {itemsDeLaZona.map((item) => {
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '200px', overflowY: 'auto' }}>
+                {itemsDeLaZona.map((item, idx) => {
                   const respondido = respuestas.has(item.id)
                   const estado = respuestas.get(item.id)?.estado
+                  const esActual = idx === itemActual
                   return (
                     <div
                       key={item.id}
+                      ref={esActual ? (el) => el?.scrollIntoView({ behavior: 'smooth', block: 'center' }) : null}
+                      className={esActual ? 'item-blink' : ''}
                       style={{
                         padding: '12px 14px',
-                        backgroundColor: respondido ? (estado === 'cumple' ? '#f0fdf4' : '#fef2f2') : '#f9fafb',
-                        borderLeft: `5px solid ${respondido ? (estado === 'cumple' ? '#22c55e' : '#dc2626') : '#e5e7eb'}`,
+                        backgroundColor: esActual ? '#fbbf24' : respondido ? (estado === 'cumple' ? '#f0fdf4' : '#fef2f2') : '#f9fafb',
+                        borderLeft: `5px solid ${esActual ? '#f59e0b' : respondido ? (estado === 'cumple' ? '#22c55e' : '#dc2626') : '#e5e7eb'}`,
                         borderRadius: '6px',
                         fontSize: '13px',
-                        fontWeight: respondido ? '500' : '400'
+                        fontWeight: respondido ? '500' : '400',
+                        transition: 'all 0.3s ease'
                       }}
                     >
-                      <p style={{ margin: 0, color: respondido ? '#1f2937' : '#9ca3af', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        {item.nombre}
+                      <p style={{ margin: 0, color: esActual ? '#78350f' : respondido ? '#1f2937' : '#9ca3af', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 'bold' }}>
+                        {esActual ? '👉 ' : ''}{item.nombre}
                         {respondido && (
                           <span style={{
                             marginLeft: 'auto',
