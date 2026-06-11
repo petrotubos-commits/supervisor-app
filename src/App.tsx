@@ -10,6 +10,7 @@ type Vista = 'menu' | 'admin' | 'supervisor' | 'inspeccion'
 
 function App() {
   const [vista, setVista] = useState<Vista>('menu')
+  const [cargado, setCargado] = useState(false)
   const [clientes, setClientes] = useState<Cliente[]>([])
   const [supervisores, setSupervisores] = useState<Supervisor[]>([])
   const [zonas, setZonas] = useState<Zona[]>([])
@@ -22,21 +23,26 @@ function App() {
     if (datosGuardados) {
       try {
         const datos = JSON.parse(datosGuardados)
+        console.log('✅ Datos encontrados en localStorage')
         setClientes(datos.clientes || [])
         setSupervisores(datos.supervisores || [])
         setZonas(datos.zonas || [])
         setItems(datos.items || [])
         setInspecciones(datos.inspecciones || [])
-        console.log('✅ Datos cargados de localStorage:', datos.clientes.length, 'clientes')
+        console.log('✅ Datos cargados: ', datos.clientes.length, 'clientes,', datos.zonas.length, 'zonas,', datos.items.length, 'items')
       } catch (e) {
-        console.error('Error cargando datos:', e)
+        console.error('❌ Error cargando datos:', e)
       }
     } else {
       console.log('📭 Sin datos guardados - comenzando nuevo')
     }
+    setCargado(true)
   }, [])
 
   useEffect(() => {
+    // Solo guardar después de haber cargado los datos iniciales
+    if (!cargado) return
+
     try {
       const datosAGuardar = {
         clientes,
@@ -45,14 +51,14 @@ function App() {
         items,
         inspecciones
       }
-      console.log('💾 GUARDANDO - Clientes:', datosAGuardar.clientes.length, 'Inspecciones:', datosAGuardar.inspecciones.length)
+      console.log('💾 GUARDANDO - Clientes:', datosAGuardar.clientes.length, 'Zonas:', datosAGuardar.zonas.length, 'Items:', datosAGuardar.items.length, 'Inspecciones:', datosAGuardar.inspecciones.length)
       const serializado = JSON.stringify(datosAGuardar)
       localStorage.setItem('supervisorAppData', serializado)
       console.log('✅ Datos guardados en localStorage - Tamaño:', (serializado.length / 1024).toFixed(2), 'KB')
     } catch (error) {
       console.error('❌ Error guardando en localStorage:', error)
     }
-  }, [clientes, supervisores, zonas, items, inspecciones])
+  }, [cargado, clientes, supervisores, zonas, items, inspecciones])
 
   const agregarCliente = (nombre: string) => {
     const nuevoCliente: Cliente = {
