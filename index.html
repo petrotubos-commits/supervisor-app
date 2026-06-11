@@ -3,11 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.json" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>supervisor-app</title>
+    <meta name="theme-color" content="#5C9E2E" />
+    <meta name="description" content="Sistema de inspección VYSA" />
+    <title>VYSA Inspector</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').then(() => {
+            console.log('✅ Service Worker registrado - App funciona sin internet');
+          }).catch((error) => {
+            console.log('Service Worker error:', error);
+          });
+        });
+      }
+    </script>
   </body>
 </html>
