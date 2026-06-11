@@ -871,15 +871,19 @@ export function SupervisorView({
                                 }).join('\n')}`
                               }).join('\n')}\n\n*Por favor, revisar y reportar cuando esté listo*`
 
-                              const url = `https://wa.me/${cliente.limpiador.whatsapp}?text=${encodeURIComponent(mensaje)}`
-                              window.open(url, '_blank')
+                              // Copiar al portapapeles
+                              navigator.clipboard.writeText(mensaje).then(() => {
+                                alert('✅ Reporte copiado al portapapeles\n\nAhora pega en tu app de mensajes')
+                              }).catch(() => {
+                                alert('Error al copiar. Intenta de nuevo.')
+                              })
                             } else {
-                              alert('El cliente no tiene número de WhatsApp registrado')
+                              alert('El cliente no tiene número registrado')
                             }
                           }}
                           style={{
                             flex: 1,
-                            backgroundColor: '#25D366',
+                            backgroundColor: '#22c55e',
                             color: 'white',
                             border: 'none',
                             borderRadius: '6px',
@@ -889,7 +893,7 @@ export function SupervisorView({
                             fontWeight: 'bold'
                           }}
                         >
-                          📱 WhatsApp
+                          📋 Copiar Reporte
                         </button>
 
                         <button
