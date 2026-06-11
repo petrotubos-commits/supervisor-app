@@ -258,17 +258,26 @@ export function SupervisorView({
                 onClick={() => { setPaso('menu'); setNuevoSupervisorNombre(''); }}
                 style={{
                   width: '100%',
-                  backgroundColor: 'white',
-                  color: '#666',
-                  border: '2px solid #ddd',
+                  backgroundColor: '#f0f0f0',
+                  color: '#333',
+                  border: '2px solid #999',
                   borderRadius: '8px',
-                  padding: '12px',
+                  padding: '14px',
                   fontWeight: 'bold',
                   cursor: 'pointer',
-                  fontSize: '14px'
+                  fontSize: '15px',
+                  transition: 'all 0.2s'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#e0e0e0'
+                  e.currentTarget.style.borderColor = '#555'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = '#f0f0f0'
+                  e.currentTarget.style.borderColor = '#999'
                 }}
               >
-                ← Volver al Menú
+                ← Volver al Menú Principal
               </button>
             </div>
           </div>
