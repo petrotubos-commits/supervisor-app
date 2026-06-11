@@ -27,7 +27,8 @@ export function SupervisorView({
   agregarSupervisor,
   actualizarEstadoItem,
   guardarInspeccion,
-  eliminarInspeccion
+  eliminarInspeccion,
+  onVolver
 }: SupervisorViewProps) {
   const [paso, setPaso] = useState<Paso>('menu')
   const [nuevoSupervisorNombre, setNuevoSupervisorNombre] = useState('')
@@ -179,7 +180,7 @@ export function SupervisorView({
                   No hay supervisores. Crea uno para comenzar.
                 </div>
               ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '16px' }}>
                   {supervisores.map((sup) => (
                     <button
                       key={sup.id}
@@ -209,6 +210,32 @@ export function SupervisorView({
                   ))}
                 </div>
               )}
+
+              <button
+                onClick={onVolver}
+                style={{
+                  width: '100%',
+                  backgroundColor: '#f0f0f0',
+                  color: '#333',
+                  border: '2px solid #999',
+                  borderRadius: '8px',
+                  padding: '14px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  fontSize: '15px',
+                  transition: 'all 0.2s'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#e0e0e0'
+                  e.currentTarget.style.borderColor = '#555'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = '#f0f0f0'
+                  e.currentTarget.style.borderColor = '#999'
+                }}
+              >
+                ← Volver al Menú Principal
+              </button>
             </div>
           </div>
         )}
