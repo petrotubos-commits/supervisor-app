@@ -139,7 +139,7 @@ export function SupervisorView({
     }
 
     guardarInspeccion(inspeccion)
-    setPaso('resumen-guardado')
+    // Permanece en resumen-observaciones - no cambia el paso
   }
 
   const inspeccionesDelSupervisor = supervisorSeleccionado
@@ -810,6 +810,15 @@ export function SupervisorView({
                 {inspeccionesDelSupervisor.map((insp) => {
                   const cliente = clientes.find(c => c.id === insp.clienteId)
                   const itemsConObservacion = insp.items.filter(i => i.estado === 'revisar')
+
+                  // Obtener la zona única si todos los items son de la misma zona
+                  const zonasEnInspeccion = new Set(itemsConObservacion.map(item => {
+                    const itemObj = items.find(i => i.id === item.itemId)
+                    return itemObj?.zonaId
+                  }))
+                  const zonaUnica = zonasEnInspeccion.size === 1 ? Array.from(zonasEnInspeccion)[0] : null
+                  const zonaObj = zonaUnica ? zonas.find(z => z.id === zonaUnica) : null
+
                   return (
                     <div
                       key={insp.id}
@@ -822,7 +831,7 @@ export function SupervisorView({
                     >
                       <div style={{ marginBottom: '12px' }}>
                         <p style={{ margin: '0 0 4px 0', fontSize: '13px', fontWeight: 'bold', color: '#333' }}>
-                          📋 {cliente?.nombre}
+                          📋 {cliente?.nombre} {zonaObj && <span style={{ color: '#666', fontWeight: 'normal' }}>({zonaObj.nombre})</span>}
                         </p>
                         <p style={{ margin: '0', fontSize: '11px', color: '#666' }}>
                           {insp.fecha} • {insp.hora}
@@ -837,13 +846,9 @@ export function SupervisorView({
                           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                             {itemsConObservacion.map((item) => {
                               const itemObj = items.find(i => i.id === item.itemId)
-                              const zona = zonas.find(z => z.id === itemObj?.zonaId)
                               return (
                                 <div key={item.itemId} style={{ borderLeft: '2px solid #d97706', paddingLeft: '8px' }}>
-                                  <p style={{ margin: 0, fontSize: '11px', color: '#333', fontWeight: '500' }}>
-                                    🗺️ {zona?.nombre}
-                                  </p>
-                                  <p style={{ margin: '2px 0 0 0', fontSize: '10px', color: '#666' }}>
+                                  <p style={{ margin: '0 0 2px 0', fontSize: '10px', color: '#666' }}>
                                     {itemObj?.nombre}
                                   </p>
                                   {item.anotaciones && (
