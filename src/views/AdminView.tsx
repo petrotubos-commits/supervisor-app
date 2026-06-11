@@ -145,37 +145,65 @@ export function AdminView({
       <main style={{ padding: '40px 16px' }}>
         <div style={{ maxWidth: '400px', margin: '0 auto' }}>
           {paso === 'menu' && (
-            <button
-              onClick={() => setPaso('crear-cliente')}
-              style={{
-                width: '100%',
-                backgroundColor: '#e3f2fd',
-                border: '3px solid #1976d2',
-                borderRadius: '16px',
-                padding: '32px 24px',
-                minHeight: '160px',
-                cursor: 'pointer',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                transition: 'all 0.3s ease',
-                textAlign: 'center'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.2)'
-                e.currentTarget.style.transform = 'translateY(-4px)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)'
-                e.currentTarget.style.transform = 'translateY(0)'
-              }}
-            >
-              <div style={{ fontSize: '56px', marginBottom: '16px', display: 'block' }}>👥</div>
-              <h2 style={{ fontSize: '28px', fontWeight: 'bold', color: '#1565c0', margin: '0 0 12px 0' }}>
-                Clientes
-              </h2>
-              <p style={{ fontSize: '14px', color: '#1976d2', margin: 0 }}>
-                Crear y gestionar clientes
-              </p>
-            </button>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <button
+                onClick={() => setPaso('crear-cliente')}
+                style={{
+                  width: '100%',
+                  backgroundColor: '#e3f2fd',
+                  border: '3px solid #1976d2',
+                  borderRadius: '16px',
+                  padding: '32px 24px',
+                  minHeight: '160px',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                  transition: 'all 0.3s ease',
+                  textAlign: 'center'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.2)'
+                  e.currentTarget.style.transform = 'translateY(-4px)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)'
+                  e.currentTarget.style.transform = 'translateY(0)'
+                }}
+              >
+                <div style={{ fontSize: '56px', marginBottom: '16px', display: 'block' }}>👥</div>
+                <h2 style={{ fontSize: '28px', fontWeight: 'bold', color: '#1565c0', margin: '0 0 12px 0' }}>
+                  Clientes
+                </h2>
+                <p style={{ fontSize: '14px', color: '#1976d2', margin: 0 }}>
+                  Crear y gestionar clientes
+                </p>
+              </button>
+
+              <button
+                onClick={onVolver}
+                style={{
+                  width: '100%',
+                  backgroundColor: '#f0f0f0',
+                  color: '#333',
+                  border: '2px solid #999',
+                  borderRadius: '8px',
+                  padding: '14px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  fontSize: '15px',
+                  transition: 'all 0.2s'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#e0e0e0'
+                  e.currentTarget.style.borderColor = '#555'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = '#f0f0f0'
+                  e.currentTarget.style.borderColor = '#999'
+                }}
+              >
+                ← Volver al Menú Principal
+              </button>
+            </div>
           )}
 
           {paso === 'crear-cliente' && (
