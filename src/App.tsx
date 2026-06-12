@@ -268,6 +268,11 @@ function App() {
               Supervisores e inspecciones
             </p>
           </button>
+
+          <div style={{ display: 'flex', gap: '16px', marginTop: '24px' }}>
+            <button onClick={exportarDatos} style={{ flex: 1, backgroundColor: '#10b981', border: 'none', borderRadius: '12px', padding: '16px', color: 'white', fontWeight: 'bold', cursor: 'pointer', fontSize: '15px', transition: 'all 0.3s', boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }} onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 8px 24px rgba(16, 185, 129, 0.4)'; e.currentTarget.style.transform = 'translateY(-2px)' }} onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)'; e.currentTarget.style.transform = 'translateY(0)' }}>💾 Respaldar Datos</button>
+            <button onClick={importarDatos} style={{ flex: 1, backgroundColor: '#f59e0b', border: 'none', borderRadius: '12px', padding: '16px', color: 'white', fontWeight: 'bold', cursor: 'pointer', fontSize: '15px', transition: 'all 0.3s', boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }} onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 8px 24px rgba(245, 158, 11, 0.4)'; e.currentTarget.style.transform = 'translateY(-2px)' }} onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)'; e.currentTarget.style.transform = 'translateY(0)' }}>📥 Cargar Respaldo</button>
+          </div>
         </div>
       </main>
     </div>
